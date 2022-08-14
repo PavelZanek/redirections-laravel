@@ -10,7 +10,8 @@ Manage your redirects easily. This package provides an easy way to integrate a r
     - [ Views ](#views)
     - [ Translations ](#translations)
 4. [ Pruning Table ](#pruningTable)
-5. [ License ](#license)
+5. [ Todos ](#todos)
+6. [ License ](#license)
 
 <a name="howItWorks"></a>
 ## How it works
@@ -79,7 +80,22 @@ protected function schedule(Schedule $schedule)
 }
 ```
 
+<a name="todos"></a>
+## Todos
+
+- ✅ Publish the package
+- ⬜️ List of redirects - fulltext
+- ⬜️ List of redirects - pagination
+- ⬜️ Add more tests
+- ⬜️ Seeder / Factory
+- ⬜️ Import / Export redirects
+- ⬜️ Toasts / Flash Messages
+- ⬜️ Regex Support
+- ⬜️ Bootstrap 5 CSS Support
+- ⬜️ Tailwind CSS Support
+- ⬜️ More info about redirects (referer, ...)
+
 <a name="license"></a>
 ## License
 
-Copyright (c) [Pavel Zaněk](https://pavelzanek.cz/). MIT Licensed, see [LICENSE](LICENSE.md) for details..
+Copyright (c) [Pavel Zaněk](https://pavelzanek.cz/). MIT Licensed, see [LICENSE](LICENSE.md) for details.
