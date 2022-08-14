@@ -30,7 +30,7 @@ class RedirectsMiddleware
             ]);
             return redirect(
                 $redirectFromDb->target_url,
-                301// $redirectFromDb->is_permanent ? 301 : 302
+                $redirectFromDb->status_code->value
             );
         }
 
