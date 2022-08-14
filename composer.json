@@ -1,0 +1,35 @@
+{
+    "name": "pavelzanek/redirections-laravel",
+    "description": "Manage your redirects easily.",
+    "keywords": [
+        "redirections",
+        "redirects",
+        "laravel"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pavel Zaněk",
+            "email": "zanek.pavel@gmail.com",
+            "homepage": "https://pavelzanek.cz",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PavelZanek\\RedirectionsLaravel\\Tests\\": "tests/",
+            "PavelZanek\\RedirectionsLaravel\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.1"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PavelZanek\\RedirectionsLaravel\\RedirectionsServiceProvider"
+            ]
+        }
+    }
+}
