@@ -1,4 +1,4 @@
-@extends('redirections-views::layouts.redirects')
+@extends('redirections-views::layouts.bootstrap5')
 
 @section('headline')
 {{ __('redirections-translations::general.newRedirect') }}
@@ -15,7 +15,7 @@
                     <div class="col-12">
 
                         <div class="form-group">
-                            <label for="source_url">{{ __('redirections-translations::general.sourceUrl') }} *</label>
+                            <label for="source_url" class="form-label">{{ __('redirections-translations::general.sourceUrl') }} *</label>
                             <input class="form-control" type="url" name="source_url" id="source_url" value="{{ old('source_url') }}">
                             @error('source_url')
                                 <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -23,7 +23,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="target_url">{{ __('redirections-translations::general.targetUrl') }} *</label>
+                            <label for="target_url" class="form-label">{{ __('redirections-translations::general.targetUrl') }} *</label>
                             <input class="form-control" type="url" name="target_url" id="target_url" value="{{ old('target_url') }}">
                             @error('target_url')
                                 <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="status_code">{{ __('redirections-translations::general.statusCode') }} *</label>
+                            <label for="status_code" class="form-label">{{ __('redirections-translations::general.statusCode') }} *</label>
                             <select class="form-control" name="status_code" id="status_code">
                                 @foreach (\PavelZanek\RedirectionsLaravel\Enums\StatusCode::cases() as $statusCode)
                                     <option value="{{ $statusCode->value }}" {{ old('status_code') !== $statusCode->value ?: 'selected' }}>
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="col-12 mt-3">
-                        <button class="btn btn-sm btn-primary" type="submit"> {{ __('redirections-translations::general.saveButton') }} *</button>
+                        <button class="btn btn-sm btn-primary" type="submit"> {{ __('redirections-translations::general.saveButton') }}</button>
                     </div>
                 </div>
             </form>

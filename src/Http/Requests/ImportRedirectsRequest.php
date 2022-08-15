@@ -3,10 +3,8 @@
 namespace PavelZanek\RedirectionsLaravel\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Enum;
-use PavelZanek\RedirectionsLaravel\Enums\StatusCode;
 
-class UpdateRedirectRequest extends FormRequest
+class ImportRedirectsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +24,7 @@ class UpdateRedirectRequest extends FormRequest
     public function rules()
     {
         return [
-            'target_url' => 'required|url',
-            'status_code' => ['required', new Enum(StatusCode::class)]
+            'csv' => 'max:10240|required|mimes:csv,txt',
         ];
     }
 }

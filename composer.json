@@ -18,7 +18,8 @@
     "autoload": {
         "psr-4": {
             "PavelZanek\\RedirectionsLaravel\\Tests\\": "tests/",
-            "PavelZanek\\RedirectionsLaravel\\": "src/"
+            "PavelZanek\\RedirectionsLaravel\\": "src/",
+            "PavelZanek\\RedirectionsLaravel\\Database\\Factories\\": "database/factories"
         }
     },
     "minimum-stability": "dev",

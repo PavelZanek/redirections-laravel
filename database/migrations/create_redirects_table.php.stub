@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use PavelZanek\RedirectionsLaravel\Enums\StatusCode;
 
-return new class extends Migration
+class CreateRedirectsTable extends Migration
 {
     /**
      * Run the migrations.

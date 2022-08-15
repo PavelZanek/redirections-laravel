@@ -10,15 +10,25 @@ Manage your redirects easily. This package provides an easy way to integrate a r
     - [ Views ](#views)
     - [ Translations ](#translations)
 4. [ Pruning Table ](#pruningTable)
-5. [ Todos ](#todos)
-6. [ License ](#license)
+4. [ Events ](#events)
+6. [ Todos ](#todos)
+7. [ Testing ](#testing)
+8. [ Security ](#security)
+9. [ Chnagelog ](#changelog)
+10. [ License ](#license)
 
 <a name="howItWorks"></a>
 ## How it works
 
-You can manage redirects in your Laravel application. After installation you can create, edit and remove redirects.
+You can manage redirects in your Laravel application. Once installed, you can create, edit, and delete redirects without the need to install additional packages.
 
+There is a lot of consideration for application performance. The tool caches the redirect information, specifically the source url. With each request to the server, the middleware will run, which will determine whether the requested url address is not listed in the cache. If it is found here, a query will be made to the database, which will find the target url address. Meanwhile, an event is dispatched and the associated queued event listener takes care of storing the additional redirection information.
 
+Don't forget to run `php artisan queue:work`, `php artisan horizon` or something else what you use.
+
+It may happen that the redirection will be unused over time, or completely unused - and records will also remain in the database. For these cases, you can schedule a command that will automatically take care of cleaning the database from unused records.
+
+Furthermore, the tool includes functions such as easy import and export of redirects, graphs of the usability of redirects, etc.
 
 <a name="installations"></a>
 ## Installations
@@ -47,7 +57,11 @@ php artisan vendor:publish --tag=redirections-config
 <a name="views"></a>
 ### Views
 
-If you want to change design of the app, you can generate views.
+If you want to change design of the app, you can generate views. The tool contains several pre-made templates for different CSS frameworks. Now available:
+
+- Bootstrap 4
+- Bootstrap 5
+- Tailwind CSS
 
 ```
 php artisan vendor:publish --tag=redirections-views
@@ -80,20 +94,50 @@ protected function schedule(Schedule $schedule)
 }
 ```
 
+## Events
+
+If someone uses a redirect (that is, goes to the source URL), the `RedirectWasUsedEvent` event is fired. So you can hook your own listener if needed.
+
+|  **Name**            |                     **Class**                              |
+|:--------------------:|:----------------------------------------------------------:|
+| RedirectWasUsedEvent | PavelZanek\RedirectionsLaravel\Events\RedirectWasUsedEvent |
+
+```php
+Event::listen(\PavelZanek\RedirectionsLaravel\Events\RedirectWasUsedEvent::class, function ($event) {
+    dd($event->redirect);
+});
+```
+
 <a name="todos"></a>
 ## Todos
 
 - ✅ Publish the package
-- ⬜️ List of redirects - fulltext
-- ⬜️ List of redirects - pagination
-- ⬜️ Add more tests
-- ⬜️ Seeder / Factory
-- ⬜️ Import / Export redirects
-- ⬜️ Toasts / Flash Messages
+- ✅ List of redirects - fulltext
+- ✅ List of redirects - pagination
+- ✅ Disable editing Source URL
+- ✅ Factory
+- ✅ Add more tests
+- ✅ Import / Export redirects
+- ✅ Toasts / Flash Messages
 - ⬜️ Regex Support
-- ⬜️ Bootstrap 5 CSS Support
-- ⬜️ Tailwind CSS Support
+- ✅ Bootstrap 5 CSS Support
+- ✅ Tailwind CSS Support
 - ⬜️ More info about redirects (referer, ...)
+
+<a name="testing"></a>
+## Testing
+
+The tool includes several tests for easier scalability.
+
+<a name="security"></a>
+## Security
+
+If you've found a bug regarding security please mail [zanek.pavel@gmail.com](mailto:zanek.pavel@gmail.com) instead of using the issue tracker.
+
+<a name="changelog"></a>
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 <a name="license"></a>
 ## License

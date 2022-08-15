@@ -1,4 +1,4 @@
-@extends('redirections-views::layouts.redirects')
+@extends('redirections-views::layouts.bootstrap5')
 
 @section('headline')
 {{ __('redirections-translations::general.redirectsHeadline') }}
@@ -10,12 +10,61 @@
 
 
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 col-md-6">
                     <p>
                         <a href="{{ route('redirects.create') }}" class="btn btn-primary btn-sm">
                             {{ __('redirections-translations::general.newRedirectButton') }}
                         </a>
+                        <a href="{{ route('redirects.export') }}" class="btn btn-primary btn-sm">
+                            {{ __('redirections-translations::general.exportButton') }}
+                        </a>
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importModal">
+                            {{ __('redirections-translations::general.importButton') }}
+                        </button>
                     </p>
+                </div>
+                <div class="col-12 col-md-6">
+                    <form action="{{ route('redirects.index') }}" class="">
+                        <div class="form-group d-flex flex-row justify-content-end align-items-center">
+                            <input class="form-control" type="text" id="search" name="search" placeholder="{{ __('redirections-translations::general.searchPlaceholder') }}" value="{{ request()->get('search') }}">
+                            <button type="submit" class="btn btn-secondary">
+                                {{ __('redirections-translations::general.searchButton') }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form action="{{ route('redirects.import') }}" method="POST" enctype="multipart/form-data">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="importModalLabel">{{ __('redirections-translations::general.importModalHeadline') }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                @csrf
+                                <div class="form-group mb-4" style="max-width: 500px; margin: 0 auto;">
+                                    <div class="custom-file text-left">
+                                        <label class="custom-file-label" for="customFile">{{ __('redirections-translations::general.chooseFileButton') }}</label>
+                                        <input type="file" name="csv" class="custom-file-input" id="customFile">
+                                        <p>
+                                            <small>{{ __('redirections-translations::general.chooseFileInfo') }}</small>
+                                        </p>
+                                        @error('csv')
+                                            <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('redirections-translations::general.closeButton') }}</button>
+                                <button type="submit" class="btn btn-primary">{{ __('redirections-translations::general.importRedirectsButton') }}</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -64,6 +113,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+
+                                {{ $redirects->links('pagination::bootstrap-5') }}
+
                             </div>
                         </div>
                     </div>
@@ -84,3 +136,14 @@
         </div>
     </div>
 @endsection
+
+@if($errors->has('csv'))
+    @section('footerScripts')
+        <script>
+            var importModal = new bootstrap.Modal(document.getElementById("importModal"), {});
+            document.onreadystatechange = function () {
+                importModal.show();
+            };
+        </script>
+    @endsection
+@endif

@@ -1,4 +1,4 @@
-@extends('redirections-views::layouts.redirects')
+@extends('redirections-views::layouts.bootstrap4')
 
 @section('headline')
 {{ __('redirections-translations::general.infoAboutRedirect') }}
@@ -20,8 +20,10 @@
                                 <strong>{{ __('redirections-translations::general.targetUrl') }}:</strong> {{ $redirect->target_url }}
                             </p>
                             <p>
-                                <strong>{{ __('redirections-translations::general.lastHit') }}:</strong> {{ $redirect->last_used?->diffForHumans() }}
-                                <small> ({{ $redirect->last_used?->format('Y-m-d H:i') }})</small>
+                                <strong>{{ __('redirections-translations::general.lastHit') }}:</strong> {{ $redirect->last_used?->diffForHumans() ?:  __('redirections-translations::general.noHit') }}
+                                @if ($redirect->last_used)
+                                    <small>({{ $redirect->last_used->format('Y-m-d H:i') }})</small>
+                                @endif
                             </p>
                             <p>
                                 <strong>{{ __('redirections-translations::general.hits') }}:</strong> {{ count($redirect->redirectData) }}
@@ -41,10 +43,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($redirectData as $key => $redirect)
+                                    @foreach ($redirectData as $key => $redirectItem)
                                         <tr>
                                             <td>{{ $key }}</td>
-                                            <td>{{ count($redirect) }}x</td>
+                                            <td>{{ count($redirectItem) }}x</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -61,8 +63,17 @@
                     </div>
                 </div>
 
-                <div class="col-12 mt-3">
+                <div class="col-12 mt-5">
                     <a class="btn btn-sm btn-secondary" href="{{ route('redirects.index') }}">{{ __('redirections-translations::general.backButton') }}</a>
+                    <a href="{{ route('redirects.edit', $redirect->id) }}" class="btn btn-sm btn-secondary">
+                        {{ __('redirections-translations::general.editRecord') }}
+                    </a>
+                    <form action="{{ route('redirects.destroy', $redirect->id) }}" method="POST" style="display: inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-danger" type="submit"
+                            onclick="return confirm('{{ __('redirections-translations::general.areYouSure') }}')"> {{ __('redirections-translations::general.deleteRecord') }}</button>
+                    </form>
                 </div>
             </div>
 

@@ -23,4 +23,9 @@ return [
     *   Specify route middleware for redirections tool
     */
     'route_middleware' => ['web'],
+
+    /*
+    *   Specify CSS framework
+    */
+    'css_framework' => 'tailwind',
 ];

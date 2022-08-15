@@ -5,6 +5,7 @@ namespace PavelZanek\RedirectionsLaravel\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use PavelZanek\RedirectionsLaravel\Database\Factories\RedirectFactory;
 use PavelZanek\RedirectionsLaravel\Enums\StatusCode;
 use PavelZanek\RedirectionsLaravel\Events\RedirectWasUsedEvent;
 
@@ -35,9 +36,6 @@ class Redirect extends Model
 
         static::updated(function($redirect)
         {
-            if($redirect->isDirty('source_url')){
-                Cache::forget('redirects_cache');
-            }
             if($redirect->isDirty('last_used')){
                 RedirectWasUsedEvent::dispatch($redirect);
             }
@@ -47,6 +45,11 @@ class Redirect extends Model
         {
             Cache::forget('redirects_cache');
         });
+    }
+    
+    protected static function newFactory()
+    {
+        return RedirectFactory::new();
     }
 
     public function redirectData()
